@@ -1,42 +1,430 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>不死图腾欢迎你!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="不死图腾 Minecraft 服务器，IP：zjd.rainplay.cn:48988">
+<meta name="theme-color" content="#0e1116">
+<title>不死图腾 · 服务器主页</title>
+<style>
+  :root {
+    --bg: #0e1116;
+    --card-top: #181e26;
+    --card-bottom: #11151b;
+    --line: #2a3240;
+    --line-soft: rgba(42, 50, 64, 0.65);
+    --text: #e6edf3;
+    --muted: #8b98a9;
+    --gold: #e8b923;
+    --gold-light: #f6e27a;
+    --green: #3ecf8e;
+    --radius: 16px;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { color-scheme: dark; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 16px;
+    background:
+      radial-gradient(900px 520px at 50% -12%, rgba(232, 185, 35, 0.13), transparent 68%),
+      radial-gradient(700px 400px at 100% 100%, rgba(62, 207, 142, 0.07), transparent 70%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.018) 0 1px, transparent 1px 4px),
+      var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", "PingFang SC",
+                 "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .card {
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    padding: 30px 26px 26px;
+    background: linear-gradient(180deg, var(--card-top), var(--card-bottom));
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow:
+      0 24px 60px -24px rgba(0, 0, 0, 0.95),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+  }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--green), transparent);
+    opacity: 0.75;
+  }
+
+  .title-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 2px;
+  }
+
+  .totem {
+    flex: none;
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(232, 185, 35, 0.35);
+    border-radius: 9px;
+    background: rgba(232, 185, 35, 0.08);
+    box-shadow: 0 0 18px rgba(232, 185, 35, 0.12);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.55rem;
+    letter-spacing: 0.06em;
+    background: linear-gradient(92deg, var(--gold), var(--gold-light) 45%, var(--green));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .subtitle {
+    margin: 0 0 22px 46px;
+    color: var(--muted);
+    font-size: 0.74rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  hr {
+    height: 0;
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+
+  .copy-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    min-width: 0;
+    padding: 11px 13px;
+    background: #0a0e13;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.92rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(232, 185, 35, 0.14);
+  }
+
+  button {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 88px;
+    padding: 11px 16px;
+    border: 0;
+    border-radius: 10px;
+    background: linear-gradient(180deg, #f0c62e, #d9a70f);
+    color: #1a1405;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: transform 0.12s ease, filter 0.12s ease, background 0.2s ease;
+  }
+
+  button:hover { filter: brightness(1.08); }
+  button:active { transform: translateY(1px); }
+
+  button:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+  }
+
+  button.copied {
+    background: linear-gradient(180deg, #4ade9c, #2fb87a);
+    color: #04140c;
+  }
+
+  .hint {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+
+  details {
+    padding: 12px 14px;
+    background: #0a0e13;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    transition: border-color 0.15s ease;
+  }
+
+  details[open] { border-color: rgba(232, 185, 35, 0.3); }
+
+  summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--gold);
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker { display: none; }
+
+  summary::before {
+    content: "▸";
+    display: inline-block;
+    margin-right: 6px;
+    color: var(--muted);
+    transition: transform 0.15s ease;
+  }
+
+  details[open] summary::before {
+    transform: rotate(90deg);
+    color: var(--gold);
+  }
+
+  details p {
+    margin: 10px 0 0;
+    color: #c9d3df;
+  }
+
+  .link-row {
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  a {
+    color: var(--green);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(62, 207, 142, 0.35);
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  a:hover {
+    color: #6ee7b7;
+    border-bottom-color: currentColor;
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  footer {
+    margin-top: 24px;
+    color: var(--muted);
+    font-size: 0.76rem;
+    text-align: center;
+  }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translate(-50%, 14px);
+    padding: 10px 18px;
+    background: #1d2632;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--text);
+    font-size: 0.86rem;
+    box-shadow: 0 12px 34px -12px #000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+  }
+
+  .toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  @media (max-width: 420px) {
+    .card { padding: 24px 18px 20px; }
+    h1 { font-size: 1.35rem; }
+    .subtitle { margin-left: 0; }
+    .copy-row { flex-direction: column; }
+    button { width: 100%; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; }
+  }
+</style>
 </head>
 <body>
 
-不死图腾
+<main class="card">
+  <div class="title-row">
+    <span class="totem" aria-hidden="true">
+      <!-- 像素风小图腾 -->
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+        <rect x="4" y="2" width="14" height="18" rx="2" fill="#e8b923" opacity="0.95"/>
+        <rect x="6" y="4" width="10" height="14" rx="1" fill="#1a1405" opacity="0.18"/>
+        <rect x="7" y="7" width="2.5" height="3" fill="#3ecf8e"/>
+        <rect x="12.5" y="7" width="2.5" height="3" fill="#3ecf8e"/>
+        <rect x="9.5" y="13" width="3" height="2" fill="#1a1405" opacity="0.75"/>
+      </svg>
+    </span>
+    <h1>不死图腾</h1>
+  </div>
+  <p class="subtitle">Totem of Undying · Minecraft 服务器</p>
 
-<hr>
+  <hr>
 
-服务器名称：不死图腾<br>
-服务器 IP：zjd.rainplay.cn:48988<br><br>
+  <label class="label" for="ipInput">服务器 IP</label>
+  <div class="copy-row">
+    <input type="text" id="ipInput" value="zjd.rainplay.cn:48988"
+           readonly spellcheck="false" autocapitalize="off" autocomplete="off"
+           aria-label="服务器 IP 地址">
+    <button type="button" id="copyBtn">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <rect x="5" y="5" width="9" height="9" rx="1.6" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M11 5V3.6A1.6 1.6 0 0 0 9.4 2H3.6A1.6 1.6 0 0 0 2 3.6v5.8A1.6 1.6 0 0 0 3.6 11H5" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <span id="copyText">复制</span>
+    </button>
+  </div>
+  <p class="hint">点击地址可全选；复制后粘贴到“多人游戏”即可加入。</p>
 
-<input type="text" id="ipInput" value="zjd.rainplay.cn:48988" readonly>
-<button type="button" onclick="copyIP()">复制</button>
+  <hr>
 
-<hr>
-
-<details>
+  <details>
     <summary>方块想说</summary>
     <p>方块想起飞，方块想起飞！</p>
-    <p>我当机长了！</p>真的不骗你！
-</details>
+    <p>我当机长了！真的不骗你！</p>
+  </details>
 
-B站：<a href="https://b23.tv/VErkusR">MC-绒星梦境</a>
+  <p class="link-row">
+    B站：<a href="https://b23.tv/VErkusR" target="_blank" rel="noopener noreferrer">MC-绒星梦境</a>
+  </p>
 
-<hr>
+  <hr>
 
-© 2026 不死图腾
+  <footer>© 2026 不死图腾</footer>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-function copyIP() {
-    var copyText = document.getElementById("ipInput");
-    copyText.select();
-    document.execCommand("copy");
-    alert("已复制");
-}
+(function () {
+  "use strict";
+
+  var IP = "zjd.rainplay.cn:48988";
+
+  var input = document.getElementById("ipInput");
+  var copyBtn = document.getElementById("copyBtn");
+  var copyText = document.getElementById("copyText");
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+  var btnTimer = null;
+
+  function showToast(message) {
+    toastEl.textContent = message;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () {
+      toastEl.classList.remove("show");
+    }, 2000);
+  }
+
+  function setButtonCopied() {
+    copyBtn.classList.add("copied");
+    copyText.textContent = "已复制";
+    clearTimeout(btnTimer);
+    btnTimer = setTimeout(function () {
+      copyBtn.classList.remove("copied");
+      copyText.textContent = "复制";
+    }, 1800);
+  }
+
+  function fallbackCopy() {
+    input.focus();
+    input.select();
+    input.setSelectionRange(0, input.value.length);
+    if (!document.execCommand("copy")) {
+      throw new Error("execCommand copy failed");
+    }
+  }
+
+  function copyIP() {
+    var done = function () {
+      setButtonCopied();
+      showToast("已复制：" + IP);
+    };
+
+    var fail = function () {
+      input.focus();
+      input.select();
+      showToast("复制失败，请手动复制");
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(IP).then(done).catch(function () {
+        try {
+          fallbackCopy();
+          done();
+        } catch (e) {
+          fail();
+        }
+      });
+    } else {
+      try {
+        fallbackCopy();
+        done();
+      } catch (e) {
+        fail();
+      }
+    }
+  }
+
+  copyBtn.addEventListener("click", copyIP);
+
+  input.addEventListener("focus", function () {
+    input.select();
+  });
+
+  input.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      copyIP();
+    }
+  });
+})();
 </script>
 
 </body>
